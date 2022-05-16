@@ -1,4 +1,3 @@
 [
-    {"id":1,"nombre":"Jumbo","items":[]},
-    {"id":2,"nombre":"mi_tienda","items":[]}
+    {"id":1,"name":"<name>","items":[]}
 ]
