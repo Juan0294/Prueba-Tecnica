@@ -35,6 +35,8 @@ Eliminar Producto: /item.php?name=lavadora
 
 [------------------- |||[FUNCIONES]||| -------------------]
 
+Las clases usuario, tienda y producto comparten en su totalidad el uso de las misma funciones. Basicamente se comprueba que al momento de efectuar alguna accion: Agredar, Editar, Listar y Eliminar, se efectuarn algunas validaciones basicas como los son: existencia de datos y de un dato en particular para que al momento de efectuar alguna accion como lo puede ser editar, listar y eliminar. Con la finalidad de que la API sea mas eficiente.
+
 [CLASE PRODUCTO]
 
 [FUNCION AGREGAR PRODUCTO]
