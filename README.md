@@ -5,7 +5,7 @@ Solución prueba tecnica.
 
 La API simula la base de datos mediante los archivos .json: productos.json, tiendas.json, usuarios.json. Ubicados en la carpeta data.  
 
-[POST MAN]
+[------------------- |||[POSTMAN]||| -------------------]
 
 [USUARIO]
 
@@ -33,7 +33,7 @@ Listar Todos los Productos: /item.php
 
 Eliminar Producto: /item.php?name=lavadora
 
-[------------- [FUNCIONES] -------------]
+[------------------- |||[FUNCIONES]||| -------------------]
 
 [CLASE PRODUCTO]
 
