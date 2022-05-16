@@ -1,81 +1,138 @@
-<?php
+<?php 
 
 class Tienda {
+
+    private $id;
+    private $nombre;
+    private $items;
   
-  private $id;
-  private $nombre;
-  private $items;
-  
-  public function __construct($id, $nombre, $items) {
+    public function __construct($id, $nombre, $items) {
     
-    $this->id = $id;
-    $this->nombre = $nombre;
-    $this->items = $items;
+        $this->id = $id;
+        $this->nombre = $nombre;
+        $this->items = $items;
 
-  }
+    }
 
-  public function getId() {
-    return $this->id;
-  }
+    public function getId() {
+        return $this->id;
+    }
  
-  public function getNombre() {
-    return $this->nombre;
-  }
+    public function getNombre() {
+        return $this->nombre;
+    }
  
-  public function getItems() {
-    return $this->items;
-  }
+    public function getItems() {
+        return $this->items;
+    }
 
+    public static function hay_Datos() {
 
-   /*
-  [[[***FUNCION OBTENER DATOS***]]]
-  Descripcion:
-  */
-
-  public static function obtener_Datos(){
-
-    return ($datos_tiendas = json_decode((file_get_contents("../data/tiendas.json")), true));
-
-  }
-
-  /*
-  [[[***FUNCION ACTUALIZAR DATOS***]]]
-  Descripcion:
-  */
-
-  public static function actualizar_Datos($array){
-
-    $archivo = fopen("../data/tiendas.json", "w");
-    fwrite($archivo, json_encode($array));
-    fclose($archivo);
-
-  }
-
-  public function agregarTienda($objTienda) {
-
-    $datos_tiendas = Tienda::obtener_Datos(); 
-    array_push($datos_tiendas, Array( "id"=> ((count($datos_tiendas))+1), "nombre" => $objTienda->getNombre(), "items" => $objTienda->getItems()));
-    Tienda::actualizar_Datos($datos_tiendas);
-    return (Tienda::verTienda_s($objTienda->getNombre()));
-
-  }
-
-  public static function verTienda_s($nombre){
-
-    $datos_tiendas = Tienda::obtener_Datos(); 
-    return (!(empty($nombre))) ? (json_encode($datos_tiendas[((count($datos_tiendas))-1)])) : (json_encode($datos_tiendas));
-
-  }
-
-  public static function eleminar_Tienda($nombre_Tienda){
-
-    $datos_tiendas = Tienda::obtener_Datos(); 
-    unset($datos_tiendas[(array_search($nombre_Tienda,array_column($datos_tiendas, 'nombre')))/* retorna la posicion del index a elimniar */]);
-    $datos_tiendas = array_values($datos_tiendas);
-    Tienda::actualizar_Datos($datos_tiendas);
-    return ('{"message":"store deleted"}');
+        return ((count(Tienda::obtener_Datos())) == 0) ? true : false;
     
-  }
+    }
+    
+    public static function obtener_Datos() {
+    
+        return (json_decode((file_get_contents("../data/tiendas.json")), true));
+    
+    }
+
+    public static function retornar_Index($datos, $nombre_O_Id_Tienda, $campo_Buscar) {
+
+        return (array_search($nombre_O_Id_Tienda,array_column($datos, $campo_Buscar)));
+
+    }
+
+    public static function actualizar_Archivo_Datos($array, $respuesta, $devolver_respuesta) {
+
+        try {
+
+            $archivo = fopen("../data/Tiendas.json", "w");
+            fwrite($archivo, json_encode($array));
+            fclose($archivo);
+            if($devolver_respuesta) {return ('{"message":"'.$respuesta.'"}');};
+           
+        } catch (Exception $e) {
+
+            return ('{"message":"the item could not be add.'.$e->getMessage().'"}');
+          
+        }
+
+    }
+
+    public static function agregarTienda($objTienda) {
+
+        $datos_Tiendas = Tienda::obtener_Datos();
+        $index = (Tienda::retornar_Index($datos_Tiendas, $objTienda->getNombre(), 'name'));
+       
+        if((!(is_numeric($index)))){
+
+            $id = ((count($datos_Tiendas))+1);
+            array_push($datos_Tiendas, Array("id"=> $id, "name" => $objTienda->getNombre(), "items" => $objTienda->getItems()));
+            Tienda::actualizar_Archivo_Datos($datos_Tiendas, "", false);
+            Tienda::verTienda_s($id);
+            return (Tienda::verTienda_s($id));
+
+        } else {
+
+            return ('{"message":"A store already exist with the name: "'.$objTienda->getNombre().'}');
+
+        }
+   
+    }
+
+    public static function verTienda_s($id_Tienda) {
+
+        if((!(Tienda::hay_Datos()))) {
+
+            $datos_Tiendas = Tienda::obtener_Datos();
+            $index = (Tienda::retornar_Index($datos_Tiendas, $id_Tienda, 'id'));
+
+            if((isset($id_Tienda))){
+
+               return ((is_numeric($index))) ? (json_encode($datos_Tiendas[(($id_Tienda)-1)])) : '{"message":"there is no exist a store wiht the id: '.$id_Tienda.'"}';
+
+            } else {
+
+                return (json_encode($datos_Tiendas));
+                
+            }
+    
+        } else {
+
+            return ('{"message":"there is no items to show."}');
+
+        }
+        
+    }
+
+    public static function eleminar_Tienda($nombre_Tienda) {
+
+        if((!(Tienda::hay_Datos()))) {
+
+            $datos_Tiendas = Tienda::obtener_Datos();
+            $index = (Tienda::retornar_Index($datos_Tiendas, $nombre_Tienda, 'name'));
+         
+            if((is_numeric($index))){
+
+                unset($datos_Tiendas[$index]);
+                $datos_Tiendas = array_values($datos_Tiendas);
+                return (Tienda::actualizar_Archivo_Datos($datos_Tiendas, "store deleted", true));
+                
+            } else {
+
+                return ('{"message":"the store with name: '.$nombre_Tienda.' do not exist."}');
+
+            }
+
+        } else {
+
+            return ('{"message":"there is no items to delete."}');
+
+        }
+        
+    }
 
 }
 
