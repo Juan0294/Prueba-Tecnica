@@ -43,7 +43,7 @@ class Producto {
         return (json_decode((file_get_contents("../data/productos.json")), true));
     
     }
-    
+
     public static function retornar_Index($datos, $nombre_O_Id_Articulo, $campo_Buscar) {
 
         return (array_search($nombre_O_Id_Articulo,array_column($datos, $campo_Buscar)));
@@ -97,7 +97,7 @@ class Producto {
 
             if((isset($id_producto))){
 
-               return ((is_numeric($index))) ? (json_encode($datos_Productos[(($id_producto)-1)])) : '{"message":"there is no exist item wiht the id: '.$id_producto.'"}';
+               return ((is_numeric($index))) ? (json_encode($datos_Productos[(($id_producto)-1)])) : '{"message":"there is no exist a item wiht the id: '.$id_producto.'"}';
 
             } else {
 
