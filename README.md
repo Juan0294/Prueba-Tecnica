@@ -24,8 +24,11 @@ Ver todas la tiendas creada: ruta/store.php
 [ARTICULO]
 
 Crear nuevo Producto: ruta/item.php?name=nevera
+
 Actualizar Producto: ruta/item.php?name=piano
+
 Listar Todos los Productos: /item.php
+
 Eliminar Producto: /item.php?name=lavadora
 
 [FUNCIONES]
