@@ -9,9 +9,10 @@ $objComprobar = new Comprobar(null);
 
 foreach($cadenas_A_Evaluar as $cadena){
 
-    echo $objComprobar->operation((str_replace(" ", "", $cadena)));
+    echo ($objComprobar->operation((str_replace(" ", "", $cadena)))) ? "true" : "false";
     
 }
+
 
 foreach($cadenas_A_Evaluar as $cadena){
 
