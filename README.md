@@ -18,7 +18,9 @@ ruta/auth.php
 [TIENDA]
 
 Crear Nueva Tienda: ruta/store.php?name=mi_tienda
+
 Eliminar Tienda: ruta/store.php?name=mi_tienda
+
 Ver todas la tiendas creada: ruta/store.php
 
 [ARTICULO]
@@ -31,7 +33,7 @@ Listar Todos los Productos: /item.php
 
 Eliminar Producto: /item.php?name=lavadora
 
-[FUNCIONES]
+[------------- [FUNCIONES] -------------]
 
 [CLASE PRODUCTO]
 
