@@ -1,3 +1,5 @@
 [
-    {"id":1,"name":"<name>","items":[]}
+    
+    {"id":1,"name":"<name>","items":[{"id": 2, "name": "piano", "price": 5, "store_id": 1}]}
+
 ]
